@@ -11,7 +11,7 @@ import UIKit
 public class CountryPickerViewController: UITableViewController {
     public weak var delegate: CountryPickerViewControllerDelegate?
     
-    public var currentCountry: Country? {
+    public var currentCountry: PlanetCountry? {
         return countryDataSource.currentCountry
     }
     
@@ -43,10 +43,10 @@ public class CountryPickerViewController: UITableViewController {
     
     fileprivate var countryDataSource = CountryDataSource()
     
-    fileprivate var searchResults: [Country]?
+    fileprivate var searchResults: [PlanetCountry]?
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
-    fileprivate func findCountry(_ indexPath: IndexPath) -> Country {
+    fileprivate func findCountry(_ indexPath: IndexPath) -> PlanetCountry {
         if let searchResults = searchResults {
             return searchResults[(indexPath as NSIndexPath).row]
         } else {
@@ -54,7 +54,7 @@ public class CountryPickerViewController: UITableViewController {
         }
     }
     
-    @objc fileprivate dynamic func cancelButtonTapped(_ sender: UIBarButtonItem) {
+    @objc fileprivate func cancelButtonTapped(_ sender: UIBarButtonItem) {
         delegate?.countryPickerViewControllerDidCancel(self)
     }
     

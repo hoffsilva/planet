@@ -8,13 +8,13 @@
 
 import UIKit
 
-public struct Country {
+public struct PlanetCountry {
     public let name: String
     public let isoCode: String
     public let callingCode: String
 }
 
-public extension Country {
+public extension PlanetCountry {
     var image: UIImage? {
         let imageName = isoCode
         let bundle = Bundle.planetBundle()
@@ -23,20 +23,21 @@ public extension Country {
 }
 
 extension Country {
-    private static var localizedCountries: [Locale : [Country]] = [:]
+    private static var localizedCountries: [Locale : [PlanetCountry]] = [:]
     private static var callingCodes: [String: String] = [:]
     
-    public static func all(locale: Locale = .current) -> [Country] {
+    public static func all(locale: Locale = .current) -> [PlanetCountry] {
         if let countries = localizedCountries[locale] {
             return countries
         }
         
         if callingCodes.isEmpty {
             let dataAsset = NSDataAsset(name: "country-calling-codes", bundle: .planetBundle())!
+            // swiftlint:disable force_cast
             callingCodes = (try? JSONSerialization.jsonObject(with: dataAsset.data, options: [])) as! [String: String]
         }
         
-        var countries: [Country] = []
+        var countries: [PlanetCountry] = []
         
         for countryCode in Locale.isoRegionCodes {
             guard let countryName = (locale as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: countryCode) else {
@@ -47,7 +48,7 @@ extension Country {
                 continue
             }
             
-            let country = Country(name: countryName, isoCode: countryCode, callingCode: "+\(callingCode)")
+            let country = PlanetCountry(name: countryName, isoCode: countryCode, callingCode: "+\(callingCode)")
             
             countries.append(country)
         }
@@ -59,11 +60,11 @@ extension Country {
         return countries
     }
     
-    public static func find(isoCode: String, locale: Locale = .current) -> Country? {
+    public static func find(isoCode: String, locale: Locale = .current) -> PlanetCountry? {
         return all(locale: locale).filter { $0.isoCode == isoCode } .first
     }
     
-    public static func find(callingCode: String, locale: Locale = .current) -> Country? {
+    public static func find(callingCode: String, locale: Locale = .current) -> PlanetCountry? {
         return all(locale: locale).filter { $0.callingCode == callingCode } .first
     }
 
