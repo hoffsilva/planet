@@ -23,7 +23,7 @@ class CountryDataSource {
         var currentCountries: [PlanetCountry] = []
         var otherCountries: [PlanetCountry] = []
         
-        let currentCountryCode = Country.currentCountryCode(currentSystemLocale: Locale.current, formattingLocale: locale)
+        let currentCountryCode = PlanetCountry.currentCountryCode(currentSystemLocale: Locale.current, formattingLocale: locale)
         
         for countryCode in countryCodes {
             if let country = Country.find(isoCode: countryCode, locale: locale) {
