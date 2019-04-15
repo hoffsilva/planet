@@ -26,7 +26,7 @@ class CountryDataSource {
         let currentCountryCode = PlanetCountry.currentCountryCode(currentSystemLocale: Locale.current, formattingLocale: locale)
         
         for countryCode in countryCodes {
-            if let country = Country.find(isoCode: countryCode, locale: locale) {
+            if let country = PlanetCountry.find(isoCode: countryCode, locale: locale) {
                 if country.isoCode == currentCountryCode {
                     currentCountries.append(country)
                 } else {
