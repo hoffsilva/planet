@@ -22,7 +22,7 @@ public extension PlanetCountry {
     }
 }
 
-extension Country {
+extension PlanetCountry {
     private static var localizedCountries: [Locale : [PlanetCountry]] = [:]
     private static var callingCodes: [String: String] = [:]
     
